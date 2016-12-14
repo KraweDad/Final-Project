@@ -1,5 +1,7 @@
 
 from ggame import App, RectangleAsset, ImageAsset, Sprite, LineStyle, Color, Frame
+import random
+import time
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 940
@@ -26,8 +28,24 @@ class Bingo(Sprite):
         Zoxy.listenKeyEvent("keyup", "left arrow", self.moveoff)
         
     def step(self):
+        self.time = time.clock()
         self.x += self.vx
         self.y += self.vy
+        Singularity = random.randrange(10000)
+        if Singularity > 0 and Singularity <= 2500:
+            if self.time == self.time + 1:
+                self.vy = -2
+        elif Singularity > 2500 and Singularity <= 5000:
+            if self.time == self.time + 1:
+                self.vy = 2
+        elif Singularity > 5000 and Singularity <= 7500:
+            if self.time == self.time. + 1:
+                self.vx = -2
+        elif Singularity > 7500 and Singularity <= 10000:
+            if self.time == self.time. + 1:
+                self.vx = 2
+        else:
+            pass
         
     def movenorth(self,event):
         self.vy = -2
@@ -74,7 +92,18 @@ class Zoxy(App):
         Sprite(Hedge3, (380, 580))
         Sprite(Hedge4, (380, 845))
         Sprite(Hedge4, (380, 145))
-        Bingo((350, 900))
+        Bingo((500, 500))
+        Bingo((600, 600))
+        Bingo((500, 600))
+        Bingo((600, 500))
+        Bingo((500, 500))
+        Bingo((600, 600))
+        Bingo((500, 600))
+        Bingo((600, 500))
+        Bingo((500, 500))
+        Bingo((600, 600))
+        Bingo((500, 600))
+        Bingo((600, 500))
         
     def step(self):
         for ship in self.getSpritesbyClass(Bingo):
