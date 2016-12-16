@@ -73,10 +73,10 @@ class People(Sprite):
         
     def step(self):
         thetime = time.time()
+        self.x += self.vx
+        self.y += self.vy
         if thetime > self.waituntil:
             self.waituntil = thetime + 1
-            self.x += self.vx
-            self.y += self.vy
             Singularity = random.randrange(10000)
             if Singularity > 0 and Singularity <= 2500:
                 self.vy = -2
@@ -121,6 +121,18 @@ class Zoxy(App):
         People((600, 600))
         People((500, 600))
         People((600, 500))
+        People((500, 500))
+        People((600, 600))
+        People((500, 600))
+        People((600, 500))
+        People((500, 500))
+        People((600, 600))
+        People((500, 600))
+        People((600, 500))
+        People((500, 500))
+        People((600, 600))
+        People((500, 600))
+        People((600, 500))
         Bingo((0,0))
         
     def step(self):
@@ -128,6 +140,10 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
+            if hip.x >= 1280 or hip.x <= 0:
+                hip.vx = hip.vx * -1
+            if hip.y >= 940 or hip.y <= 0 :
+                hip.vy = hip.vy * -1
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
