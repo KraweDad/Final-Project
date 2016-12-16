@@ -5,7 +5,7 @@ import time
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 940
-
+#BINGOWASTHEPLAYER
 class Bingo(Sprite):
     black = Color(0,1)
     skin = Color(0x003300, 1)
@@ -26,44 +26,69 @@ class Bingo(Sprite):
         Zoxy.listenKeyEvent("keyup", "right arrow", self.moveoff)
         Zoxy.listenKeyEvent("keydown", "left arrow", self.movewest)
         Zoxy.listenKeyEvent("keyup", "left arrow", self.moveoff)
-        
+    
     def step(self):
-        self.time = time.clock()
         self.x += self.vx
         self.y += self.vy
-        Singularity = random.randrange(10000)
-        if Singularity > 0 and Singularity <= 2500:
-            if self.time == self.time + 1:
-                self.vy = -2
-        elif Singularity > 2500 and Singularity <= 5000:
-            if self.time == self.time + 1:
-                self.vy = 2
-        elif Singularity > 5000 and Singularity <= 7500:
-            if self.time == self.time. + 1:
-                self.vx = -2
-        elif Singularity > 7500 and Singularity <= 10000:
-            if self.time == self.time. + 1:
-                self.vx = 2
-        else:
-            pass
-        
-    def movenorth(self,event):
-        self.vy = -2
-        
-    def movesouth(self,event):
-        self.vy = 2
     
+    def movesouth(self,event):
+        if self.vy >= 0 and self.vy <= 10:
+            self.vy = self.vy + 0.2
+        else:
+            self.vy = 10
+    def movenorth(self,event):
+        if self.vy >= -10 and self.vy <= 0:
+            self.vy = self.vy - 0.2
+        else:
+            self.vy = -10
     def moveeast(self,event):
-        self.vx = 2
+        if self.vx >= 0 and self.vx <= 10:
+            self.vx = self.vx + 0.2
+        else:
+            self.vx = 10
     
     def movewest(self,event):
-        self.vx = -2
+        if self.vx >= -10 and self.vx <= 0:
+            self.vx = self.vx - 0.2
+        else:
+            self.vx = -10
     
     def moveoff(self,event):
         self.vx = self.vy = 0
+#PEOPLEBEPEOPLE
+class People(Sprite):
+    time.time()
+    black = Color(0,1)
+    skin = Color(0x003300, 1)
+    line = LineStyle(0, black)
+    asset = RectangleAsset(20,20, line, skin)
     
+    def __init__(self,position):
+        super().__init__(Bingo.asset, position)
+        self.vy = 0
+        self.vx = 0
+        self.vr = 0
+        self.fxcenter = self.fycenter = 0
+        self.waituntil = time.time() + 1
         
-
+    def step(self):
+        thetime = time.time()
+        if thetime > self.waituntil:
+            self.waituntil = thetime + 1
+            self.x += self.vx
+            self.y += self.vy
+            Singularity = random.randrange(10000)
+            if Singularity > 0 and Singularity <= 2500:
+                self.vy = -2
+            elif Singularity > 2500 and Singularity <= 5000:
+                self.vy = 2
+            elif Singularity > 5000 and Singularity <= 7500:
+                self.vx = -2
+            elif Singularity > 7500 and Singularity <= 10000:
+                self.vx = 2
+            else:
+                pass
+#ZOXYGAMEISBESTZOXYGAME
 class Zoxy(App):
     def __init__(self, width, height):
         super().__init__(width, height)
@@ -92,22 +117,17 @@ class Zoxy(App):
         Sprite(Hedge3, (380, 580))
         Sprite(Hedge4, (380, 845))
         Sprite(Hedge4, (380, 145))
-        Bingo((500, 500))
-        Bingo((600, 600))
-        Bingo((500, 600))
-        Bingo((600, 500))
-        Bingo((500, 500))
-        Bingo((600, 600))
-        Bingo((500, 600))
-        Bingo((600, 500))
-        Bingo((500, 500))
-        Bingo((600, 600))
-        Bingo((500, 600))
-        Bingo((600, 500))
+        People((500, 500))
+        People((600, 600))
+        People((500, 600))
+        People((600, 500))
+        Bingo((0,0))
         
     def step(self):
         for ship in self.getSpritesbyClass(Bingo):
             ship.step()
+        for hip in self.getSpritesbyClass(People):
+            hip.step()
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
