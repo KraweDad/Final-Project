@@ -32,39 +32,30 @@ class Bingo(Sprite):
         self.y += self.vy
     
     def movesouth(self,event):
-        if self.vy >= 0 and self.vy <= 10:
-            self.vy = self.vy + 0.2
-        else:
-            self.vy = 10
+        self.vy = 10
+        
     def movenorth(self,event):
-        if self.vy >= -10 and self.vy <= 0:
-            self.vy = self.vy - 0.2
-        else:
-            self.vy = -10
+        self.vy = -10
+        
     def moveeast(self,event):
-        if self.vx >= 0 and self.vx <= 10:
-            self.vx = self.vx + 0.2
-        else:
-            self.vx = 10
-    
+        self.vx = 10
+        
     def movewest(self,event):
-        if self.vx >= -10 and self.vx <= 0:
-            self.vx = self.vx - 0.2
-        else:
-            self.vx = -10
-    
+        self.vx = -10
+        
     def moveoff(self,event):
         self.vx = self.vy = 0
 #PEOPLEBEPEOPLE
 class People(Sprite):
     time.time()
+    Human = True
     black = Color(0,1)
-    skin = Color(0x003300, 1)
-    line = LineStyle(0, black)
+    skin = Color(0xfbc02d, 1)
+    line = LineStyle(1, black)
     asset = RectangleAsset(20,20, line, skin)
     
     def __init__(self,position):
-        super().__init__(Bingo.asset, position)
+        super().__init__(People.asset, position)
         self.vy = 0
         self.vx = 0
         self.vr = 0
@@ -75,8 +66,11 @@ class People(Sprite):
         thetime = time.time()
         self.x += self.vx
         self.y += self.vy
+        Infection = self.collidingWithSprites(Bingo)
+        if len(Infection) != 0:
+            self.visible = False
         if thetime > self.waituntil:
-            self.waituntil = thetime + 1
+            self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
             if Singularity > 0 and Singularity <= 2500:
                 self.vy = -2
@@ -88,7 +82,29 @@ class People(Sprite):
                 self.vx = 2
             else:
                 pass
-#ZOXYGAMEISBESTZOXYGAME
+#ZAMBIESBEZAMBIES
+class ZPeople(Sprite):
+    black = Color(0,1)
+    skin = Color(0x003300, 1)
+    line = LineStyle(1, black)
+    asset = RectangleAsset(20,20, line, skin)
+    
+    
+    def __init__(self,position):
+        super().__init__(ZPeople.asset, position)
+        self.vy = 0
+        self.vx = 0
+        self.vr = 0
+        self.fxcenter = self.fycenter = 0
+        self.visible = False
+        
+    def step(self):
+        self.x = People.x
+        self.y = People.y
+        Infection = self.collidingWithSprites(Bingo)
+        if len(Infection) != 0:
+            self.visible = True
+#ZOXYGAMEISBESTZOXYGAME        
 class Zoxy(App):
     def __init__(self, width, height):
         super().__init__(width, height)
@@ -133,6 +149,23 @@ class Zoxy(App):
         People((600, 600))
         People((500, 600))
         People((600, 500))
+
+        ZPeople((500, 500))
+        ZPeople((600, 600))
+        ZPeople((500, 600))
+        ZPeople((600, 500))
+        ZPeople((500, 500))
+        ZPeople((600, 600))
+        ZPeople((500, 600))
+        ZPeople((600, 500))
+        ZPeople((500, 500))
+        ZPeople((600, 600))
+        ZPeople((500, 600))
+        ZPeople((600, 500))
+        ZPeople((500, 500))
+        ZPeople((600, 600))
+        ZPeople((500, 600))
+        ZPeople((600, 500))
         Bingo((0,0))
         
     def step(self):
@@ -140,10 +173,19 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
-            if hip.x >= 1280 or hip.x <= 0:
-                hip.vx = hip.vx * -1
-            if hip.y >= 940 or hip.y <= 0 :
-                hip.vy = hip.vy * -1
+            if hip.x >= 1280:
+                hip.x = 20
+                hip.y = random.randrange(940)
+            if hip.x <= 0:
+                hip.x = 1260
+                hip.y = random.randrange(940)
+            if hip.y >= 940:
+                hip.x = random.randrange(1280)
+                hip.y = 20
+            if hip.y <= 0:
+                hip.x = random.randrange(1280)
+                hip.y = 920
+                
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
