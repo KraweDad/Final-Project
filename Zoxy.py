@@ -90,20 +90,23 @@ class ZPeople(Sprite):
     asset = RectangleAsset(20,20, line, skin)
     
     
-    def __init__(self,position):
+    def __init__(self,position,person):
         super().__init__(ZPeople.asset, position)
         self.vy = 0
         self.vx = 0
         self.vr = 0
+        self.peep = person
         self.fxcenter = self.fycenter = 0
-        self.visible = False
         
     def step(self):
-        self.x = People.x
-        self.y = People.y
+        self.x += self.vx
+        self.y += self.vy
+        self.vy = self.peep.vy
+        self.vx = self.peep.vx
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
             self.visible = True
+            print("here I am")
 #ZOXYGAMEISBESTZOXYGAME        
 class Zoxy(App):
     def __init__(self, width, height):
@@ -133,39 +136,15 @@ class Zoxy(App):
         Sprite(Hedge3, (380, 580))
         Sprite(Hedge4, (380, 845))
         Sprite(Hedge4, (380, 145))
-        People((500, 500))
-        People((600, 600))
-        People((500, 600))
-        People((600, 500))
-        People((500, 500))
-        People((600, 600))
-        People((500, 600))
-        People((600, 500))
-        People((500, 500))
-        People((600, 600))
-        People((500, 600))
-        People((600, 500))
-        People((500, 500))
-        People((600, 600))
-        People((500, 600))
-        People((600, 500))
 
-        ZPeople((500, 500))
+        ZPeople((500, 500), People((500,500)))
         ZPeople((600, 600))
         ZPeople((500, 600))
         ZPeople((600, 500))
-        ZPeople((500, 500))
-        ZPeople((600, 600))
-        ZPeople((500, 600))
-        ZPeople((600, 500))
-        ZPeople((500, 500))
-        ZPeople((600, 600))
-        ZPeople((500, 600))
-        ZPeople((600, 500))
-        ZPeople((500, 500))
-        ZPeople((600, 600))
-        ZPeople((500, 600))
-        ZPeople((600, 500))
+        #People((500, 500))
+        People((600, 600))
+        People((500, 600))
+        People((600, 500))
         Bingo((0,0))
         
     def step(self):
@@ -185,6 +164,8 @@ class Zoxy(App):
             if hip.y <= 0:
                 hip.x = random.randrange(1280)
                 hip.y = 920
+        for pip in self.getSpritesbyClass(ZPeople):
+            pip.step()
                 
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
