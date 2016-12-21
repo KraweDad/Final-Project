@@ -68,7 +68,7 @@ class People(Sprite):
         self.y += self.vy
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
-            self.visible = False
+            self.destroy
         if thetime > self.waituntil:
             self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
@@ -97,6 +97,7 @@ class ZPeople(Sprite):
         self.vr = 0
         self.peep = person
         self.fxcenter = self.fycenter = 0
+        self.visible = False
         
     def step(self):
         self.x += self.vx
@@ -106,7 +107,6 @@ class ZPeople(Sprite):
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
             self.visible = True
-            print("here I am")
 #ZOXYGAMEISBESTZOXYGAME        
 class Zoxy(App):
     def __init__(self, width, height):
@@ -138,13 +138,13 @@ class Zoxy(App):
         Sprite(Hedge4, (380, 145))
 
         ZPeople((500, 500), People((500,500)))
-        ZPeople((600, 600))
-        ZPeople((500, 600))
-        ZPeople((600, 500))
-        #People((500, 500))
-        People((600, 600))
-        People((500, 600))
-        People((600, 500))
+        ZPeople((600, 600), People((600,600)))
+        ZPeople((500, 600), People((500,600)))
+        ZPeople((600, 500), People((600,500)))
+        ZPeople((500, 500), People((500,500)))
+        ZPeople((600, 600), People((600,600)))
+        ZPeople((500, 600), People((500,600)))
+        ZPeople((600, 500), People((600,500)))
         Bingo((0,0))
         
     def step(self):
