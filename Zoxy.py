@@ -111,6 +111,7 @@ class ZPeople(Sprite):
 class Zoxy(App):
     def __init__(self, width, height):
         super().__init__(width, height)
+        thetime = time.time()
         black = Color(1, 1)
         line = LineStyle(2, black)
         grass = Color(0x229954, 1)
@@ -165,11 +166,19 @@ class Zoxy(App):
                 hip.x = 410
                 hip.y = 525
             if hip.x >= 420 and hip.x <= 720:
-                hip.x = 410
-                hip.y = 525
+                hip.visible = False
+                if thetime > self.waituntil:
+                    self.waituntil = thetime + .5
+                    hip.x = 410
+                    hip.y = 525
+                    hip.visible = True
             if hip.y >= 670 and hip.y <= 270:
-                hip.x = 410
-                hip.y = 525
+                hip.visible = False
+                if thetime > self.waituntil:
+                    self.waituntil = thetime + .5
+                    hip.x = 410
+                    hip.y = 525
+                    hip.visible = True
         for pip in self.getSpritesbyClass(ZPeople):
             pip.step()
             if pip.x >= 1280:
@@ -185,11 +194,19 @@ class Zoxy(App):
                 pip.x = 410
                 pip.y = 525
             if pip.x >= 420 and pip.x <= 720:
-                pip.x = 410
-                pip.y = 525
+                pip.visible = False
+                if thetime > self.waituntil:
+                    self.waituntil = thetime + .5
+                    pip.x = 410
+                    pip.y = 525
+                    pip.visible = True
             if pip.y >= 670 and pip.y <= 270:
-                pip.x = 410
-                pip.y = 525
+                pip.visible = False
+                if thetime > self.waituntil:
+                    self.waituntil = thetime + .5
+                    pip.x = 410
+                    pip.y = 525
+                    pip.visible = True
                 
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
