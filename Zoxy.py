@@ -164,7 +164,10 @@ class Zoxy(App):
             if hip.y <= 0:
                 hip.x = 410
                 hip.y = 525
-            if hip.x >= 420 and hip.x <= 720 and hip.y >= 670 and hip.y <= 270:
+            if hip.x >= 420 and hip.x <= 720:
+                hip.x = 410
+                hip.y = 525
+            if hip.y >= 670 and hip.y <= 270:
                 hip.x = 410
                 hip.y = 525
         for pip in self.getSpritesbyClass(ZPeople):
@@ -181,7 +184,10 @@ class Zoxy(App):
             if pip.y <= 0:
                 pip.x = 410
                 pip.y = 525
-            if pip.x >= 420 and pip.x <= 720 and pip.y >= 670 and pip.y <= 270:
+            if pip.x >= 420 and pip.x <= 720:
+                pip.x = 410
+                pip.y = 525
+            if pip.y >= 670 and pip.y <= 270:
                 pip.x = 410
                 pip.y = 525
                 
