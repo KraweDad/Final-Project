@@ -153,19 +153,23 @@ class Zoxy(App):
         for hip in self.getSpritesbyClass(People):
             hip.step()
             if hip.x >= 1280:
-                hip.x = 20
-                hip.y = random.randrange(940)
+                hip.destroy
             if hip.x <= 0:
-                hip.x = 1260
-                hip.y = random.randrange(940)
+                hip.destroy
             if hip.y >= 940:
-                hip.x = random.randrange(1280)
-                hip.y = 20
+                hip.destroy
             if hip.y <= 0:
-                hip.x = random.randrange(1280)
-                hip.y = 920
+                hip.destroy
         for pip in self.getSpritesbyClass(ZPeople):
             pip.step()
+            if pip.x >= 1280:
+                pip.destroy
+            if pip.x <= 0:
+                pip.destroy
+            if pip.y >= 940:
+                pip.destroy
+            if pip.y <= 0:
+                pip.destroy
                 
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
