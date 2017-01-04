@@ -68,7 +68,7 @@ class People(Sprite):
         self.y += self.vy
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
-            self.destroy
+            self.destroy()
         if thetime > self.waituntil:
             self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
@@ -82,31 +82,6 @@ class People(Sprite):
                 self.vx = 2
             else:
                 pass
-#ZAMBIESBEZAMBIES
-class ZPeople(Sprite):
-    black = Color(0,1)
-    skin = Color(0x003300, 1)
-    line = LineStyle(1, black)
-    asset = RectangleAsset(20,20, line, skin)
-    
-    
-    def __init__(self,position,person):
-        super().__init__(ZPeople.asset, position)
-        self.vy = 0
-        self.vx = 0
-        self.vr = 0
-        self.peep = person
-        self.fxcenter = self.fycenter = 0
-        self.visible = False
-        
-    def step(self):
-        self.x += self.vx
-        self.y += self.vy
-        self.vy = self.peep.vy
-        self.vx = self.peep.vx
-        Infection = self.collidingWithSprites(Bingo)
-        if len(Infection) != 0:
-            self.visible = True
 #ZOXYGAMEISBESTZOXYGAME        
 class Zoxy(App):
     def __init__(self, width, height):
@@ -130,27 +105,17 @@ class Zoxy(App):
         X = random.randrange(1280)
         Y = random.randrange(940)
         Sprite(Grass, (0,0))
-        Sprite(Roof, (440,270))
-        Sprite(Stone, (420,520))
-        Sprite(Stone, (380,520))
-        Sprite(Road, (310,0))
-        Sprite(Hedge, (840,170))
-        Sprite(Hedge2, (380, 170))
-        Sprite(Hedge3, (380, 580))
-        Sprite(Hedge4, (380, 845))
-        Sprite(Hedge4, (380, 145))
-        
+        Sprite(Roof, (0,270))
 
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
-        ZPeople((X, Y), People((X,Y)))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
+        People((X,Y))
         
         Bingo((0,0))
         
@@ -159,57 +124,8 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
-            thetime = time.time()
-            if hip.x >= 1280:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = hip.vx*-1
-            if hip.x <= 0:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = -5
-            if hip.y >= 940:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = -5
-            if hip.y <= 0:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = -5
-            if hip.x >= 420 and hip.x <= 720:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = -5
-            if hip.y >= 670 and hip.y <= 270:
-                hip.x = 410
-                hip.y = 525
-                hip.vx = -5
         for pip in self.getSpritesbyClass(ZPeople):
             pip.step()
-            if pip.x >= 1280:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = pip.vx*-1
-            if pip.x <= 0:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = -5
-            if pip.y >= 940:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = -5
-            if pip.y <= 0:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = -5
-            if pip.x >= 420 and pip.x <= 720:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = -5
-            if pip.y >= 670 and pip.y <= 270:
-                pip.x = 410
-                pip.y = 525
-                pip.vx = -5
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
