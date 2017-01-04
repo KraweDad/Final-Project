@@ -111,7 +111,7 @@ class ZPeople(Sprite):
 class Zoxy(App):
     def __init__(self, width, height):
         super().__init__(width, height)
-        thetime = time.time()
+        time.time()
         black = Color(1, 1)
         line = LineStyle(2, black)
         grass = Color(0x229954, 1)
@@ -127,6 +127,8 @@ class Zoxy(App):
         Stone = RectangleAsset(20,50,line,stone)
         Road = RectangleAsset(60,940,line,road)
         Roof = RectangleAsset(300,400,line,roof)
+        X = random.randrange(1280)
+        Y = random.randrange(940)
         Sprite(Grass, (0,0))
         Sprite(Roof, (440,270))
         Sprite(Stone, (420,520))
@@ -137,15 +139,19 @@ class Zoxy(App):
         Sprite(Hedge3, (380, 580))
         Sprite(Hedge4, (380, 845))
         Sprite(Hedge4, (380, 145))
+        
 
-        ZPeople((500, 500), People((500,500)))
-        ZPeople((600, 600), People((600,600)))
-        ZPeople((500, 600), People((500,600)))
-        ZPeople((600, 500), People((600,500)))
-        ZPeople((500, 500), People((500,500)))
-        ZPeople((600, 600), People((600,600)))
-        ZPeople((500, 600), People((500,600)))
-        ZPeople((600, 500), People((600,500)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        ZPeople((X, Y), People((X,Y)))
+        
         Bingo((0,0))
         
     def step(self):
@@ -153,61 +159,57 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
+            thetime = time.time()
             if hip.x >= 1280:
                 hip.x = 410
                 hip.y = 525
+                hip.vx = hip.vx*-1
             if hip.x <= 0:
                 hip.x = 410
                 hip.y = 525
+                hip.vx = -5
             if hip.y >= 940:
                 hip.x = 410
                 hip.y = 525
+                hip.vx = -5
             if hip.y <= 0:
                 hip.x = 410
                 hip.y = 525
+                hip.vx = -5
             if hip.x >= 420 and hip.x <= 720:
-                hip.visible = False
-                if thetime > self.waituntil:
-                    self.waituntil = thetime + .5
-                    hip.x = 410
-                    hip.y = 525
-                    hip.visible = True
+                hip.x = 410
+                hip.y = 525
+                hip.vx = -5
             if hip.y >= 670 and hip.y <= 270:
-                hip.visible = False
-                if thetime > self.waituntil:
-                    self.waituntil = thetime + .5
-                    hip.x = 410
-                    hip.y = 525
-                    hip.visible = True
+                hip.x = 410
+                hip.y = 525
+                hip.vx = -5
         for pip in self.getSpritesbyClass(ZPeople):
             pip.step()
             if pip.x >= 1280:
                 pip.x = 410
                 pip.y = 525
+                pip.vx = pip.vx*-1
             if pip.x <= 0:
                 pip.x = 410
                 pip.y = 525
+                pip.vx = -5
             if pip.y >= 940:
                 pip.x = 410
                 pip.y = 525
+                pip.vx = -5
             if pip.y <= 0:
                 pip.x = 410
                 pip.y = 525
+                pip.vx = -5
             if pip.x >= 420 and pip.x <= 720:
-                pip.visible = False
-                if thetime > self.waituntil:
-                    self.waituntil = thetime + .5
-                    pip.x = 410
-                    pip.y = 525
-                    pip.visible = True
+                pip.x = 410
+                pip.y = 525
+                pip.vx = -5
             if pip.y >= 670 and pip.y <= 270:
-                pip.visible = False
-                if thetime > self.waituntil:
-                    self.waituntil = thetime + .5
-                    pip.x = 410
-                    pip.y = 525
-                    pip.visible = True
-                
+                pip.x = 410
+                pip.y = 525
+                pip.vx = -5
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
