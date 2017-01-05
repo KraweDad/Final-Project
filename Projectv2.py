@@ -32,16 +32,16 @@ class Bingo(Sprite):
         self.y += self.vy
     
     def movesouth(self,event):
-        self.vy = 10
+        self.vy = 8
         
     def movenorth(self,event):
-        self.vy = -10
+        self.vy = -8
         
     def moveeast(self,event):
-        self.vx = 10
+        self.vx = 8
         
     def movewest(self,event):
-        self.vx = -10
+        self.vx = -8
         
     def moveoff(self,event):
         self.vx = self.vy = 0
@@ -73,11 +73,11 @@ class People(Sprite):
             self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
             if Singularity > 0 and Singularity <= 2500:
-                self.vx = -8
+                self.vx = -2
             elif Singularity > 2500 and Singularity <= 5000:
-                self.vx = -4
+                self.vx = -2
             elif Singularity > 5000 and Singularity <= 7500:
-                self.vx = -6
+                self.vx = -3
             elif Singularity > 7500 and Singularity <= 10000:
                 self.vx = -2
             else:
@@ -103,26 +103,34 @@ class Zoxy(App):
         Road = RectangleAsset(60,940,line,road)
         Roof = RectangleAsset(30,400,line,roof)
         Roof2 = RectangleAsset(30,300,line,roof)
-        X = random.randrange(1280)
+        X = random.randrange(100) + 1280
+        X2 = random.randrange(100) + 1380
         Y = random.randrange(940)
         Sprite(Grass, (0,0))
-        Sprite(Roof, (200,50))
+        Sprite(Roof2, (200,0))
         Sprite(Roof2, (200,600))
         Sprite(RectangleAsset(-400,30,line,roof), (0,0))
-        Sprite(CircleAsset(45, line, roof), (215, 90))
-        Sprite(CircleAsset(25, line, roof), (215, 90))
+        Sprite(CircleAsset(45, line, roof), (215, 40))
+        Sprite(CircleAsset(25, line, roof), (215, 40))
         Sprite(CircleAsset(45, line, roof), (215, 900))
         Sprite(CircleAsset(25, line, roof), (215, 900))
 
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
-        People((X,Y))
+        People((X2,300))
+        People((X,320))
+        People((X2,340))
+        People((X,360))
+        People((X2,380))
+        People((X,400))
+        People((X2,420))
+        People((X,440))
+        People((X2,460))
+        People((X,480))
+        People((X2,500))
+        People((X,520))
+        People((X2,540))
+        People((X,560))
+        People((X2,580))
+
         
         Bingo((0,0))
         
@@ -131,6 +139,8 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
+            if hip.x <= 0:
+                hip.x = 1280
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
