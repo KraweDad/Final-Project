@@ -1,5 +1,5 @@
 
-from ggame import App, RectangleAsset, ImageAsset, Sprite, LineStyle, Color, Frame
+from ggame import App, RectangleAsset, ImageAsset, Sprite, LineStyle, Color, Frame, CircleAsset
 import random
 import time
 
@@ -68,18 +68,18 @@ class People(Sprite):
         self.y += self.vy
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
-            self.destroy()
+            self.x = 1280
         if thetime > self.waituntil:
             self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
             if Singularity > 0 and Singularity <= 2500:
-                self.vy = -2
+                self.vx = -8
             elif Singularity > 2500 and Singularity <= 5000:
-                self.vy = 2
+                self.vx = -4
             elif Singularity > 5000 and Singularity <= 7500:
-                self.vx = -2
+                self.vx = -6
             elif Singularity > 7500 and Singularity <= 10000:
-                self.vx = 2
+                self.vx = -2
             else:
                 pass
 #ZOXYGAMEISBESTZOXYGAME        
@@ -93,7 +93,7 @@ class Zoxy(App):
         hedge = Color(0x145A32, 1)
         stone = Color(0xB2BABB, 1)
         road = Color(0x515A5A, 1)
-        roof = Color(0xA04000, 1)
+        roof = Color(0x5F6A6A, 1)
         Grass = RectangleAsset(1279,939,line,grass)
         Hedge = RectangleAsset(25,700,line,hedge)
         Hedge2 = RectangleAsset(25,340,line,hedge)
@@ -101,11 +101,18 @@ class Zoxy(App):
         Hedge4 = RectangleAsset(485,25,line,hedge)
         Stone = RectangleAsset(20,50,line,stone)
         Road = RectangleAsset(60,940,line,road)
-        Roof = RectangleAsset(300,400,line,roof)
+        Roof = RectangleAsset(30,400,line,roof)
+        Roof2 = RectangleAsset(30,300,line,roof)
         X = random.randrange(1280)
         Y = random.randrange(940)
         Sprite(Grass, (0,0))
-        Sprite(Roof, (0,270))
+        Sprite(Roof, (200,50))
+        Sprite(Roof2, (200,600))
+        Sprite(RectangleAsset(-400,30,line,roof), (0,0))
+        Sprite(CircleAsset(45, line, roof), (215, 90))
+        Sprite(CircleAsset(25, line, roof), (215, 90))
+        Sprite(CircleAsset(45, line, roof), (215, 900))
+        Sprite(CircleAsset(25, line, roof), (215, 900))
 
         People((X,Y))
         People((X,Y))
@@ -124,8 +131,6 @@ class Zoxy(App):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
-        for pip in self.getSpritesbyClass(ZPeople):
-            pip.step()
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
