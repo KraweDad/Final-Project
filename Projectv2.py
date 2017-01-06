@@ -1,5 +1,5 @@
 
-from ggame import App, RectangleAsset, ImageAsset, Sprite, LineStyle, Color, Frame, CircleAsset
+from ggame import App, RectangleAsset, ImageAsset, Sprite, LineStyle, Color, Frame, CircleAsset, TextAsset
 import random
 import time
 
@@ -12,12 +12,14 @@ class Bingo(Sprite):
     line = LineStyle(0, black)
     asset = RectangleAsset(20,20, line, skin)
     
-    def __init__(self,position):
+    def __init__(self,position,app):
         super().__init__(Bingo.asset, position)
+        self.app = app
         self.vy = 0
         self.vx = 0
         self.vr = 0
         self.fxcenter = self.fycenter = 0
+        self.Block = self.collidingWithSprites(People)
         Zoxy.listenKeyEvent("keydown", "up arrow", self.movenorth)
         Zoxy.listenKeyEvent("keyup", "up arrow", self.moveoff)
         Zoxy.listenKeyEvent("keydown", "down arrow", self.movesouth)
@@ -34,8 +36,9 @@ class Bingo(Sprite):
             self.vx = 0
         else:
             self.x += self.vx
+        if len(self.Block) != 0:
+            self.app.peanuts = self.app.peanuts + 1
             
-    
     def movesouth(self,event):
         self.vy = 8
         
@@ -94,6 +97,8 @@ class Zoxy(App):
         time.time()
         black = Color(1, 1)
         line = LineStyle(2, black)
+        peanuts = 0
+        Score = str(peanuts)
         grass = Color(0x229954, 1)
         hedge = Color(0x145A32, 1)
         stone = Color(0xB2BABB, 1)
@@ -108,6 +113,7 @@ class Zoxy(App):
         Road = RectangleAsset(60,940,line,road)
         Roof = RectangleAsset(30,400,line,roof)
         Roof2 = RectangleAsset(30,300,line,roof)
+        score = TextAsset("Score:" + Score + "", style= "40pt Comic Sans MS", fill = Color(0xD2B4DE,1), width=200)
         X = random.randrange(100) + 1280
         X2 = random.randrange(100) + 1380
         Y = random.randrange(940)
@@ -135,9 +141,10 @@ class Zoxy(App):
         People((X2,540))
         People((X,560))
         People((X2,580))
+        self.prompt = Sprite(score, (10,10))
 
         
-        Bingo((640,300))
+        Bingo((640,300), self)
         
     def step(self):
         for ship in self.getSpritesbyClass(Bingo):
