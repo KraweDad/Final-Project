@@ -28,8 +28,13 @@ class Bingo(Sprite):
         Zoxy.listenKeyEvent("keyup", "left arrow", self.moveoff)
     
     def step(self):
-        self.x += self.vx
         self.y += self.vy
+        if self.x <= 245:
+            self.x -= self.vx
+            self.vx = 0
+        else:
+            self.x += self.vx
+            
     
     def movesouth(self,event):
         self.vy = 8
@@ -132,14 +137,14 @@ class Zoxy(App):
         People((X2,580))
 
         
-        Bingo((0,0))
+        Bingo((640,300))
         
     def step(self):
         for ship in self.getSpritesbyClass(Bingo):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
-            if hip.x <= 0:
+            if hip.x <= 230:
                 hip.x = 1280
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
