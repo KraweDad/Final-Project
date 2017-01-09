@@ -97,8 +97,8 @@ class Zoxy(App):
         time.time()
         black = Color(1, 1)
         line = LineStyle(2, black)
-        peanuts = 0
-        Score = str(peanuts)
+        self.peanuts = 0
+        Score = str(self.peanuts)
         grass = Color(0x229954, 1)
         hedge = Color(0x145A32, 1)
         stone = Color(0xB2BABB, 1)
@@ -113,7 +113,8 @@ class Zoxy(App):
         Road = RectangleAsset(60,940,line,road)
         Roof = RectangleAsset(30,400,line,roof)
         Roof2 = RectangleAsset(30,300,line,roof)
-        score = TextAsset("Score:" + Score + "", style= "40pt Comic Sans MS", fill = Color(0xD2B4DE,1), width=200)
+        self.score = TextAsset("Score:" + Score + "", style= "40pt Comic Sans MS", fill = Color(0xD2B4DE,1), width=200)
+        self.waituntil = time.time() + 1
         X = random.randrange(100) + 1280
         X2 = random.randrange(100) + 1380
         Y = random.randrange(940)
@@ -141,18 +142,25 @@ class Zoxy(App):
         People((X2,540))
         People((X,560))
         People((X2,580))
-        self.prompt = Sprite(score, (10,10))
+        self.prompt = Sprite(self.score, (10,10))
 
         
         Bingo((640,300), self)
         
     def step(self):
+        thetime = time.time()
+        
         for ship in self.getSpritesbyClass(Bingo):
             ship.step()
         for hip in self.getSpritesbyClass(People):
             hip.step()
             if hip.x <= 230:
                 hip.x = 1280
+        if thetime > self.waituntil:
+            self.waituntil = thetime
+            self.score.destroy()
+            self.peanuts = self.peanuts+1
+            self.prompt = Sprite(self.score, (10,10))
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
 myapp.run()
