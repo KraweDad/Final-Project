@@ -76,7 +76,7 @@ class People(Sprite):
         self.y += self.vy
         Infection = self.collidingWithSprites(Bingo)
         if len(Infection) != 0:
-            self.x = 1280
+            self.x = 1300
         if thetime > self.waituntil:
             self.waituntil = thetime + .5
             Singularity = random.randrange(10000)
@@ -156,10 +156,14 @@ class Zoxy(App):
             hip.step()
             if hip.x <= 230:
                 hip.x = 1280
+                self.peanuts = self.peanuts - 10
         if thetime > self.waituntil:
             self.waituntil = thetime
-            self.score.destroy()
-            self.peanuts = self.peanuts+1
+            self.prompt.destroy()
+            self.peanuts = self.peanuts + .01
+            peanuts = self.peanuts
+            Score = str(peanuts)
+            self.score = TextAsset("Score:" + Score + "", style= "40pt Comic Sans MS", fill = Color(0xD2B4DE,1), width=200)
             self.prompt = Sprite(self.score, (10,10))
 
 myapp = Zoxy(SCREEN_WIDTH, SCREEN_HEIGHT)
